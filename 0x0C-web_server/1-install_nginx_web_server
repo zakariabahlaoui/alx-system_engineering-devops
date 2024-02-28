@@ -1,12 +1,28 @@
 #!/usr/bin/env bash
-# Configures a new Ubuntu machine with nginx
-sudo apt-get -y update
-sudo apt-get -y install nginx
-sudo ufw allow "Nginx HTTP" # allow incoming connections from nginx
-# sudo ufw status verbose: should return inactive
-cd /var/www/ || return
-sudo chmod 777 html
-echo "Hello World!" > html/index.html
-sudo chmod 755 html
-cd ~ || return
-sudo service nginx restart
+# Update package index
+apt-get update
+
+# Install Nginx with -y flag to assume "yes" for all prompts
+apt-get install -y nginx
+
+# Verify Nginx installation by checking if it's running
+ps aux | grep nginx
+
+# Create a default index.html file with "Hello World!" content
+echo "Hello World!" > /var/www/html/index.html
+
+# Restart Nginx to apply changes
+service nginx restart
+
+# Check if Nginx is listening on port 80
+netstat -tuln | grep :80
+
+# Test Nginx configuration by querying it with curl
+response=$(curl -s localhost)
+
+# Check if the response contains "Hello World!"
+if [[ "$response" == *"Hello World!"* ]]; then
+    echo "Nginx is properly configured. Test successful."
+else
+    echo "Nginx configuration test failed. Please check the configuration."
+fi
