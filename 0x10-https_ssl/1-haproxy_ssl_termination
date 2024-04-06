@@ -46,5 +46,5 @@ frontend ehoneah-frontend-https
 
 backend ehoneah-backend
         balance roundrobin
-        server 511756-web-01 35.153.57.114 check
-        server 511756-web-02 54.174.159.252 check
+        server 511756-web-01 35.153.57.114:80 check
+        server 511756-web-02 54.174.159.252:80 check
