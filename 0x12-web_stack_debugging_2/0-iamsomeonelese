@@ -1,20 +1,3 @@
 #!/usr/bin/env bash
-
-# Check if exactly one argument is provided
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 <username>"
-  exit 1
-fi
-
-# Get the username argument
-username="$1"
-
-# Use sudo to run whoami as the specified user
-sudo -n whoami --username="$username"
-
-# Check the exit code of the sudo command
-if [ $? -eq 0 ]; then
-  echo "Successfully ran whoami as $username."
-else
-  echo "Failed to run whoami as $username. Please check user existence and permissions."
-fi
+# Runs the whoami command under the user passed as argument.
+sudo -u "$1" whoami
