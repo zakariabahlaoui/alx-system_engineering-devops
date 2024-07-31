@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     # Get the to-do list for the employee using the provided employee ID
     params = {"userId": employee_id}
-    todos = requests.get(url + "todos", params).json()
+    todos = requests.get(url + "todos/1", params).json()
 
     # Filter completed tasks and count them
     completed = [t.get("title") for t in todos if t.get("completed") is True]
