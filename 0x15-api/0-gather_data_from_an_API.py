@@ -9,7 +9,7 @@ if __name__ == "__main__":
         users = requests.get("https://jsonplaceholder.typicode.com/users",
                              params=args).json()
         args = {"userId": sys.argv[1]}
-        todos = requests.get("https://jsonplaceholder.typicode.com/todos/1",
+        todos = requests.get("https://jsonplaceholder.typicode.com/todos",
                              params=args).json()
         todos_len = 0
         todos_arr = []
