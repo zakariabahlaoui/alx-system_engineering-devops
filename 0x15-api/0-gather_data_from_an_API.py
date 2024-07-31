@@ -1,28 +1,25 @@
 #!/usr/bin/python3
 """Script that uses REST API"""
-
 import requests
 import sys
 
-
 if __name__ == "__main__":
-    employee_id = sys.argv[1]
-    endpoint = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+    if len(sys.argv) == 2 and sys.argv[1].isdigit():
+        args = {"id": sys.argv[1]}
+        users = requests.get("https://jsonplaceholder.typicode.com/users",
+                             params=args).json()
+        args = {"userId": sys.argv[1]}
+        todos = requests.get("https://jsonplaceholder.typicode.com/todos",
+                             params=args).json()
+        todos_len = 0
+        todos_arr = []
+        for i in todos:
+            if i.get("completed"):
+                todos_arr.append(i)
+                todos_len += 1
 
-    # get user name
-    employee_name = requests.get(endpoint).json().get("name")
+        print("Employee {} is done with tasks({}/{}):".format(
+              users[0].get("name"), todos_len, len(todos)))
 
-    # get employee todos
-    endpoint += "/todos"
-    todos = requests.get(endpoint).json()
-    completed_todos = [todo for todo in todos if todo.get("completed")]
-
-    all = len(todos)
-    completed = len(completed_todos)
-
-    print(
-        f"Employee {employee_name} is done with tasks({completed}/{all}):"
-    )
-    # display the title of completed tasks
-    for task in completed_todos:
-        print(f"	 {task.get('title')}"
+        for i in todos_arr:
+            print("\t {}".format(i.get("title")))
